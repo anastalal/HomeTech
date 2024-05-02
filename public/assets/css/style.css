@@ -86,6 +86,11 @@
             border: 2px solid transparent;
             border-radius: 16px;
         }
+        .bg-form{
+          background: linear-gradient(#212121c2, #212121) padding-box, linear-gradient(145deg, transparent 35%, #e81cff, #40c9ff) border-box;
+          border: 2px solid transparent;
+          border-radius: 16px;
+        }
         /* .my-mycard{
             border: 1px solid #6555c6;
             box-shadow: 2px 2px 2px 1px rgb(190 155 155 / 20%);
@@ -135,7 +140,7 @@
         }
 
         main {
-            display: flex;
+            /* display: flex; */
             flex-direction: column;
             justify-content: center;
             /* Aligns content to the end on the cross axis */

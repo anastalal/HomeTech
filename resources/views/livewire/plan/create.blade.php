@@ -1,5 +1,5 @@
 <div>
-    <div class="container">
+    <div class="container w-full max-w-md mx-auto mt-1">
         <div class="row justify-content-center">
             <div class="col-md-12 p-5 px-4">
                 <div class="form">

@@ -1,22 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container mx-10">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="hero px-2">
-                <h1>Simplify Your Life with Smart Home Solutions</h1>
-                <p>Make Your Home a Smart Home – Convenience, Safety, Efficiency.</p>
-                
-                
-                
+                <h1 class="text-4xl font-bold mb-4">Simplify Your Life with Smart Home Solutions</h1>
+                <p class="text-1xl font-bold">Make Your Home a Smart Home – Convenience, Safety, Efficiency.</p>
             </div>
-           
         </div>
     </div>
     <div class="mt-5">
         @if ($plans)
-               <h1 class="text-center">Your Plans</h1>
+               <h1 class="text-center mb-10">Your Plans</h1>
                <div class="row">
                 @foreach ($plans as $plan)
                 <div class="col-md-3">

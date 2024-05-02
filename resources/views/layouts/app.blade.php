@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -57,7 +58,13 @@
                             @endif
                         @else
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Create plan</a>
+                            <a class="nav-link" href="{{ route('home') }}">My Plans</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('plan.create') }}">Create plan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('compare.show') }}">Compare Devices</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Ask Us</a>
@@ -68,11 +75,15 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('profile') }}" >
+                                        profile
+                                       </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
+
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
