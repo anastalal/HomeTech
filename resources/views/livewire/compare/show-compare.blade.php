@@ -53,7 +53,14 @@
              
             </div>
             <div class="flex items-center gap-2 mt-3">
-              <button style="--clr: #423f44" class="button" wire:click="getSuggestions({{ $com->id }},'show')">
+              <button style="--clr: #423f44" class="button" 
+              @if ($com->generated == 0 )
+              wire:click="getSuggestions({{ $com->id }},'gen')"
+              @else
+              wire:click="getSuggestions({{ $com->id }},'show')"
+              @endif
+              {{-- wire:click="getSuggestions({{ $com->id }},'show')" --}}
+              >
                 <span class="button__icon-wrapper">
                     <svg width="10" class="button__icon-svg" wire:loading.remove xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
@@ -64,9 +71,13 @@
                         <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
                     </svg>
                 </span>
-                Show
+                @if ($com->generated == 0 )
+                Generate
+                @else
+               Show
+                @endif
               </button>
-              <button wire:click="getSuggestions({{ $com->id }},'gen')" style="--clr: #423f44" class="button" href="#" @if ($com->generated >= 2)
+              {{-- <button wire:click="getSuggestions({{ $com->id }},'gen')" style="--clr: #423f44" class="button" href="#" @if ($com->generated >= 2)
                 disabled
               @endif >
                 <span class="button__icon-wrapper">
@@ -80,7 +91,7 @@
                     </svg>
                 </span>
                 Regenerate
-              </button>
+              </button> --}}
             </div>
           </div>
           <div class="p-6 pt-0">
@@ -174,7 +185,7 @@
             <p class="text-sm text-muted-foreground" >Simplify Your Life with Smart Home Solutions</p>
           </div>
           <div class="p-3">
-          <div wire:loading wire:target="getSuggestions" class="flex flex-col bg-neutral-800 w-full h-64 animate-pulse rounded-xl p-4 gap-4">
+          <div wire:loading  wire:target="getSuggestions"  class="flex flex-col bg-neutral-800 w-full h-64 animate-pulse rounded-xl p-4 gap-4">
             <div class="bg-neutral-400/50 w-full h-32 animate-pulse rounded-md"></div>
             <div class="flex flex-col gap-2">
               <div class="bg-neutral-400/50 w-full h-4 animate-pulse rounded-md"></div>
@@ -188,7 +199,7 @@
             {!! $suggestions !!}
             
             @else
-                <p wire:model="error" wire:loading.remove wire:target="getSuggestions">No Comparisons available. Please Select Comparison or try again later.</p>
+                <p wire:model="error" wire:loading.remove wire:target="getSuggestions">No comparison result. Please Select Comparison or try again later.</p>
             @endif
           </div>
            

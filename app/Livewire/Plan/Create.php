@@ -19,10 +19,10 @@ class Create extends Component
     public function rules()
     {
         return [
-            'name' =>  'required|min:5',
+            'name' =>  'required|min:3',
             'area' => 'required|integer|max:30,min:5',
-            'min_budget' => 'required|integer|max:100000,min:20',
-            'max_budget' => 'required|integer|max:100000,min:20',
+            'min_budget' => 'required|integer|max:100000,min:20|gt:max_budget',
+            'max_budget' => 'required|integer|max:100000,min:20|gt:max_budget',
         ];
     }
     public function savePlan()

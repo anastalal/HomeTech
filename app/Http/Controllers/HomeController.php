@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Plan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,10 +13,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Show the application dashboard.
@@ -26,5 +27,10 @@ class HomeController extends Controller
     {
         $plans = Auth::user()->plans;
         return view('home' , compact("plans"));
+    }
+    public function plans()
+    {
+        $plans = Plan::all()->sortByDesc('created_at');
+        return view('welcome' , compact("plans"));
     }
 }

@@ -18,6 +18,9 @@
                                         <option value="">Select room type</option>
                                         <option value="living-room">Living Room</option>
                                         <option value="bedroom">Bedroom</option>
+                                        <option value="Kitchen">Kitchen</option>
+                                        <option value="Guest Room">Guest Room</option>
+                                        <option value="Home Office">Home Office</option>
                                       </select>
                                     @error('type')
                                     <span class="invalid-feedback text-danger" role="alert">

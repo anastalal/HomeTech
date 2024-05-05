@@ -24,6 +24,10 @@ class Show extends ModalComponent
     public function mount( $plan){
         $this->plan =Plan::find($plan);
     }
+    public function deletePlan(){
+       $plan = Plan::find($this->plan->id)->delete();
+       return $this->redirect('/home');
+    }
     #[On('update-plan')] 
     public function update($plan){
         $this->plan =Plan::find($plan);
@@ -32,16 +36,20 @@ class Show extends ModalComponent
     {
         $room = Room::find($room);
         if($type == 'show'){
-            if($room->generated){
+            if($room->generated>0){
                 $this->suggestions = $room->content;
-            }else{
-                $threadRun = $this->createAndRunThread($room);
-                $this->loadAnswer($threadRun,$room);
+                $this->plan = Plan::find($room->plan->id);
             }
+            // else{
+            //     $threadRun = $this->createAndRunThread($room);
+            //     $this->loadAnswer($threadRun,$room);
+            //     $this->plan = Plan::find($room->plan->id);
+            // }
         }
         else{
                $threadRun = $this->createAndRunThread($room);
                 $this->loadAnswer($threadRun,$room);
+                $this->plan = Plan::find($room->plan->id);
         }
        
        

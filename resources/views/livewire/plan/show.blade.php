@@ -6,7 +6,9 @@
         <h2 class="text-lg font-semibold">Rooms</h2>
         <small class="mx-2"> Rooms: {{ $plan->rooms->count() }}</small>
        </div>
-        <button  wire:click="$dispatch('openModal', { component: 'room.create-room', arguments: { plan: {{ $plan->id }} } })" 
+       @auth()
+       @if (Auth::user()->id  == $plan->user_id)
+       <button  wire:click="$dispatch('openModal', { component: 'room.create-room', arguments: { plan: {{ $plan->id }} } })" 
         class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -25,6 +27,9 @@
           </svg>
           <span class="sr-only">Add Project</span>
         </button>
+       @endif
+     @endauth
+      
       </header>
       <div class="flex-1 overflow-y-auto p-4 custom-scroll">
         <div class="grid gap-4">
@@ -49,36 +54,47 @@
               
              
             </div>
-            <div class="flex items-center gap-2 mt-3">
-              <button style="--clr: #423f44" class="button" wire:click="getDeviceSuggestions({{ $room->id }},'show')">
-                <span class="button__icon-wrapper">
-                    <svg width="10" class="button__icon-svg" wire:loading.remove xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
-                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                    </svg>
-                    <svg class="button__icon-svg  button__icon-svg--copy" wire:loading xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle fill="#443842" stroke="#443842" stroke-width="15" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#443842" stroke="#443842" stroke-width="15" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#443842" stroke="#443842" stroke-width="15" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
+           
+             <div class="flex items-center gap-2 mt-3">
+                <button style="--clr: #423f44" class="button" @if ($room->generated  == 0) disabled @endif 
+                wire:click="getDeviceSuggestions({{ $room->id }},'show')">
+                  <span class="button__icon-wrapper">
+                      <svg width="10" class="button__icon-svg" wire:loading.remove xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                          <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                      </svg>
+                      <svg class="button__icon-svg  button__icon-svg--copy" wire:loading xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle fill="#443842" stroke="#443842" stroke-width="15" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#443842" stroke="#443842" stroke-width="15" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#443842" stroke="#443842" stroke-width="15" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
+                      
+                      <svg class="button__icon-svg  button__icon-svg--copy" wire:loading.remove xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                          <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                      </svg>
+                  </span>
+                  Show
+                </button>
+                @auth()
+                @if (Auth::user()->id  == $plan->user_id)
+                <button wire:click="getDeviceSuggestions({{ $room->id }},'gen')" 
+                  style="--clr: #423f44" class="button" href="#" @if ($room->generated >= 2) disabled @endif >
+                  <span class="button__icon-wrapper">
+                      <svg wire:loading.remove width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                          <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                      </svg>
+                      <svg class="button__icon-svg  button__icon-svg--copy" wire:loading xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle fill="#443842" stroke="#443842" stroke-width="15" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#443842" stroke="#443842" stroke-width="15" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#443842" stroke="#443842" stroke-width="15" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
                     
-                    <svg class="button__icon-svg  button__icon-svg--copy" wire:loading.remove xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
-                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                    </svg>
-                </span>
-                Show
-              </button>
-              <button wire:click="getDeviceSuggestions({{ $room->id }},'gen')" style="--clr: #423f44" class="button" href="#" @if ($room->generated >= 2)
-                disabled
-              @endif >
-                <span class="button__icon-wrapper">
-                    <svg wire:loading.remove width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
-                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                    </svg>
-                    <svg class="button__icon-svg  button__icon-svg--copy" wire:loading xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle fill="#443842" stroke="#443842" stroke-width="15" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="#443842" stroke="#443842" stroke-width="15" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="#443842" stroke="#443842" stroke-width="15" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>
+                      <svg class="button__icon-svg  button__icon-svg--copy" wire:loading.remove xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                          <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                      </svg>
+                  </span>
+                  @if ($room->generated  == 0 ) 
+                  Generate
+                  @else
+                  Regenerate
+                   @endif
                   
-                    <svg class="button__icon-svg  button__icon-svg--copy" wire:loading.remove xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
-                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                    </svg>
-                </span>
-                Regenerate
-              </button>
-            </div>
+                </button>
+                @endif
+              @endauth
+               
+              </div>
           </div>
           <div class="p-6 pt-0">
             <div class="flex items-center justify-between">
@@ -124,7 +140,7 @@
             <small class="mx-2"> Max Budget: {{ $plan->max_budget }}</small>
         </div>
         <div class="flex items-center gap-2">
-          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+          {{-- <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -143,25 +159,33 @@
             </svg>
             <span class="sr-only">Edit</span>
           </button>
-          <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-5 w-5"
-            >
-              <path d="M3 6h18"></path>
-              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-            </svg>
-            <span class="sr-only">Delete</span>
-          </button>
+           --}}
+           @auth()
+           @if (Auth::user()->id  == $plan->user_id)
+           <button wire:click="deletePlan"
+           wire:confirm="Are you sure you want to delete this Plan?"
+           class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+             <svg
+               xmlns="http://www.w3.org/2000/svg"
+               width="24"
+               height="24"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2"
+               stroke-linecap="round"
+               stroke-linejoin="round"
+               class="h-5 w-5"
+             >
+               <path d="M3 6h18"></path>
+               <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+               <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+             </svg>
+             <span class="sr-only">Delete</span>
+           </button>
+           @endif
+         @endauth
+         
         </div>
       </header>
       <div class="flex-1 overflow-y-auto p-4">

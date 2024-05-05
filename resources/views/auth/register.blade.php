@@ -5,7 +5,7 @@
     <div class="container  w-full max-w-md mx-auto mt-1">
         <form  action="{{ route('register') }}" method="POST" class=" p-4 bg-form">
             @csrf
-            <h2 class="text-2xl font-bold mb-4">Sign Up</h2>
+            <h2 class="text-2xl font-bold mb-4">Register</h2>
             <div class="form-groupd">
                 <div class="grid gap-2">
                     <label
@@ -48,7 +48,7 @@
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     for="device1"
                   >
-                    Last Name
+                  Email
                   </label>
                     <input id="names" name="email" placeholder="Email" type="email" class=" @error('email') is-invalid @enderror flex peer text-gray-700 h-10 w-full rounded-md border border-input 
                     bg-background px-3 py-2 text-sm ring-offset-background file:border-0

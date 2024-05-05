@@ -13,15 +13,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-
+{{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+    {{-- @vite(['resources/css/app.css']) --}}
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.css'])
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 </head>
 <body>
     <div class="overlayd"></div>
  
+    
     
     <div id="app" class="app">
        
@@ -66,9 +68,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('compare.show') }}">Compare Devices</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="#">Ask Us</a>
-                        </li>
+                        </li> --}}
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->first_name }}
@@ -100,5 +102,7 @@
             @yield('content')
         </main>
     </div>
+    
+  <x-contact/>
 </body>
 </html>

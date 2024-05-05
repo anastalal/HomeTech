@@ -33,7 +33,7 @@ class ShowCompare extends Component
         $this->compars = Auth::user()->compars->sortByDesc('created_at');
 
     }
-    
+    #[On('create-compare')] 
     public function getSuggestions($id,$type)
     {
         
@@ -55,6 +55,7 @@ class ShowCompare extends Component
                 $compare ->content = $this->suggestions;
                 $compare->generated =  $compare->generated + 1;
                 $compare->save();
+                $this->update_compare();
                 
             }catch(Exception $e){
                 $this->error = 'Request failed, please try again';

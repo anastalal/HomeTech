@@ -17,13 +17,15 @@ class CreateCompare extends ModalComponent
     }
     public function save(){
         $this->validate();
-        Compare::create([
+      $co =   Compare::create([
             'device1' =>$this->device1,
             'device2' =>$this->device2,
             'user_id' =>Auth::user()->id
         ]);
         $this->closeModal();
         $this->dispatch('update-compare'); 
+        // $this->dispatch('create-compare',$co->id,'gen'); 
+        // $this->dispatch('create-compare',7,'show'); 
 
     }
   public function rules() : array

@@ -18,15 +18,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Route::get('/test', function () {
     return view('test');
 });
 
 Route::get('/plan/create', Create::class)->name('plan.create')->middleware('auth');
-Route::get('/plan/{plan}/show', Show::class)->name('plan.show')->middleware('auth');
+Route::get('/plan/{plan}/show', Show::class)->name('plan.show');
 Route::get('/compare/create', CreateCompare::class)->name('compare.create')->middleware('auth');
 Route::get('/compare/show', ShowCompare::class)->name('compare.show')->middleware('auth');
 Route::get('/profile', Profile::class)->name('profile')->middleware('auth');
@@ -34,3 +34,4 @@ Route::get('/profile', Profile::class)->name('profile')->middleware('auth');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'plans'])->name('index');
