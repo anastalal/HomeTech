@@ -20,9 +20,9 @@ class Create extends Component
     {
         return [
             'name' =>  'required|min:3',
-            'area' => 'required|integer|max:30,min:5',
-            'min_budget' => 'required|integer|max:100000,min:20|gt:max_budget',
-            'max_budget' => 'required|integer|max:100000,min:20|gt:max_budget',
+            'area' => 'required|integer|max:1000,min:5',
+            'min_budget' => 'required|integer|max:100000,min:20|lt:max_budget',
+            'max_budget' => 'required|integer|max:100000,min:20|gt:min_budget',
         ];
     }
     public function savePlan()
