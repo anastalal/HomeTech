@@ -46,6 +46,7 @@
                 </svg>
               </div>
            </button>
+           <a href="password/reset">Reset Password?</a>
     </form>
 </div>
 

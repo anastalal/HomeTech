@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('height')->nullable();
             $table->integer('width')->nullable();
             $table->text('devices');
-            $table->foreign('plan_id')->references('id')->on('plans');
+            $table->foreign('plan_id')->references('id')->on('plans')->onDelete('cascade');
 
             $table->timestamps();
         });

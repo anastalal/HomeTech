@@ -1,11 +1,12 @@
 <?php
 
-use App\Livewire\Compare\CreateCompare;
-use App\Livewire\Compare\ShowCompare;
-use App\Livewire\Plan\Create;
-use App\Livewire\Plan\Show;
 use App\Livewire\Profile;
+use App\Livewire\Plan\Show;
+use App\Livewire\Plan\Create;
+use Illuminate\Support\Facades\Auth;
+use App\Livewire\Compare\ShowCompare;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Compare\CreateCompare;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 Route::get('/test', function () {
     return view('test');
 });
@@ -34,4 +35,5 @@ Route::get('/profile', Profile::class)->name('profile')->middleware('auth');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/', [App\Http\Controllers\HomeController::class, 'plans'])->name('index');
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'plans'])->name('index');
+Route::get('/plans', [App\Http\Controllers\HomeController::class, 'plans'])->name('plans');

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('area');
             $table->integer('min_budget')->nullable();
             $table->integer('max_budget')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
 
             $table->timestamps();
         });

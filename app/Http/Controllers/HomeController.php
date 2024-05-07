@@ -31,6 +31,6 @@ class HomeController extends Controller
     public function plans()
     {
         $plans = Plan::all()->sortByDesc('created_at');
-        return view('welcome' , compact("plans"));
+        return view('plans' , compact("plans"));
     }
 }
