@@ -28,6 +28,11 @@ class Show extends ModalComponent
        $plan = Plan::find($this->plan->id)->delete();
        return $this->redirect('/home');
     }
+    public function deleteRoom($room, $plan){
+        $room = Room::find($room)->delete();
+        $this->update($plan);
+        // return $this->redirect('/home');
+     }
     #[On('update-plan')] 
     public function update($plan){
         $this->plan =Plan::find($plan);

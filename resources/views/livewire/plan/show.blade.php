@@ -40,9 +40,34 @@
          @foreach ($rooms as $room )
          <div class="rounded-lg border bg-card text-card-foreground shadow-sm" >
           <div class="flex-col space-y-1.5 p-6 flex items-start justify-between">
-            <div class="text-left">
-              <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Room: {{  $count-- }}</h3>
-              <p class="text-sm text-muted-foreground">{{ $room->type }} Height: {{ $room->height }} | Width: {{ $room->width }}</p>
+            <div class="flex w-full justify-between">
+              <div class="text-left">
+                <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Room: {{  $count-- }}</h3>
+                <p class="text-sm text-muted-foreground">{{ $room->type }} Height: {{ $room->height }} | Width: {{ $room->width }}</p>
+              </div>
+              <div class="">
+                <button wire:click="deleteRoom({{ $room->id }}, {{ $plan->id }})"
+                wire:confirm="Are you sure you want to delete this Room?"
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-5 w-5"
+                  >
+                    <path d="M3 6h18"></path>
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                  </svg>
+                  <span class="sr-only">Delete</span>
+                </button>
+              </div>
             </div>
             <div class="flex items-center gap-2 flex-wrap">
               Devices: <br>

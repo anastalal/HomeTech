@@ -31,7 +31,10 @@ class ShowCompare extends Component
     #[On('update-compare')] 
     public function update_compare(){
         $this->compars = Auth::user()->compars->sortByDesc('created_at');
-
+    }
+    public function deleteCompare($id){
+        Compare::findOrFail($id)->delete();
+        $this->update_compare();
     }
     #[On('create-compare')] 
     public function getSuggestions($id,$type)

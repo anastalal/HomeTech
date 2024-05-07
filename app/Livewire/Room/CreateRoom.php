@@ -29,8 +29,8 @@ class CreateRoom extends ModalComponent
     {
         return [
             'type' =>  'required|min:5',
-            'height' => 'required|integer|max:10,min:2',
-            'width' => 'required|integer|max:10,min:2',
+            'height' => 'required|integer|max:15,min:2',
+            'width' => 'required|integer|max:15,min:2',
             // 'max_budget' => 'required|integer',
         ];
     }
