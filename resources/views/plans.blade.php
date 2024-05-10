@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-10">
+    <div class="container mx-auto">
         <div class="mt-5">
             @if ($plans)
                 <h1 class="text-center mb-10 text-3xl">Public Plans</h1>

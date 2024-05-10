@@ -36,7 +36,6 @@ class Create extends Component
             'max_budget'  =>$this->max_budget,
             'user_id'=>Auth::user()->id
         ]);
-        session()->flash('status', 'Post successfully updated.');
         return $this->redirect('/home');
     }
 }

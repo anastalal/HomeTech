@@ -6,10 +6,11 @@
         <h2 class="text-lg font-semibold">Rooms</h2>
         <small class="mx-2"> Rooms: {{ $plan->rooms->count() }}</small>
        </div>
-       @auth()
+       @auth
        @if (Auth::user()->id  == $plan->user_id)
        <button  wire:click="$dispatch('openModal', { component: 'room.create-room', arguments: { plan: {{ $plan->id }} } })" 
-        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+        class="flex gap-2 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-auto">
+
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -26,6 +27,7 @@
             <path d="M12 5v14"></path>
           </svg>
           <span class="sr-only">Add Project</span>
+          add
         </button>
        @endif
      @endauth
@@ -95,7 +97,7 @@
                   </span>
                   Show
                 </button>
-                @auth()
+                @auth
                 @if (Auth::user()->id  == $plan->user_id)
                 <button wire:click="getDeviceSuggestions({{ $room->id }},'gen')" 
                   style="--clr: #423f44" class="button" href="#" >
@@ -185,7 +187,7 @@
             <span class="sr-only">Edit</span>
           </button>
            --}}
-           @auth()
+           @auth
            @if (Auth::user()->id  == $plan->user_id)
            <button wire:click="deletePlan"
            wire:confirm="Are you sure you want to delete this Plan?"

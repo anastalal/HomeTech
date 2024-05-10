@@ -23,6 +23,7 @@ class Show extends ModalComponent
     }
     public function mount( $plan){
         $this->plan =Plan::find($plan);
+        // $plan =  Plan::
     }
     public function deletePlan(){
        $plan = Plan::find($this->plan->id)->delete();
@@ -45,11 +46,7 @@ class Show extends ModalComponent
                 $this->suggestions = $room->content;
                 $this->plan = Plan::find($room->plan->id);
             }
-            // else{
-            //     $threadRun = $this->createAndRunThread($room);
-            //     $this->loadAnswer($threadRun,$room);
-            //     $this->plan = Plan::find($room->plan->id);
-            // }
+           
         }
         else{
                $threadRun = $this->createAndRunThread($room);
