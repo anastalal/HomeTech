@@ -2,25 +2,17 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Plan;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-// use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable{
     use HasApiTokens, HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    // The $fillable array lists the attributes that can be mass assigned safely during the creation or update of a user
     protected $fillable = [
         'first_name',
         'last_name',
@@ -28,38 +20,30 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * Send the password reset notification.
-     *
-     * @param  string  $token
-     * @return void
-     */
-    public function sendPasswordResetNotification($token)
-    {
+    // Defines a method to send a password reset notification to the user
+    public function sendPasswordResetNotification($token){
         $this->notify(new ResetPasswordNotification($token));
     }
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    // The $hidden array is used to specify which attributes should be hidden from JSON responses
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
+    // 
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // This method specifies one-to-many relationship between User and Plan
+    // This allows the user to have multiple plans
     public function plans() :HasMany{
      return $this->hasMany(Plan::class);
     }
+
+    // This method specifies one-to-many relationship between User and Compare
+    // This allows the user to have multiple comparisons
     public function compars() :HasMany{
         return $this->hasMany(Compare::class);
        }
