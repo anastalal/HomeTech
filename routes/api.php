@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
 |
+|
+|This route is typically used in applications to provide a quick 
+|secure way for the front-end to retrieve details about the currently authenticated user,
+|
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

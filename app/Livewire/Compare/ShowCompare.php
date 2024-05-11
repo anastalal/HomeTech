@@ -10,39 +10,43 @@ use OpenAI\Laravel\Facades\OpenAI;
 use Illuminate\Support\Facades\Auth;
 use OpenAI\Responses\Threads\Runs\ThreadRunResponse;
 
-class ShowCompare extends Component
-{
+// Defines a Livewire component for showing device comparisons
+class ShowCompare extends Component{
+    // Class attributes
     public $device1;
     public $device2;
     public $suggestions;
     public $error;
     public  $compars;
-    public function render()
-    {
+    
+    // This method defines the main render method that will be called to display the view associated with this component
+    public function render(){
         return view('livewire.compare.show-compare');
     }
-    public function mount()
-    {
+
+    public function mount(){
         $this->device1='';
         $this->device2='';
-       $this->compars = Auth::user()->compars->sortByDesc('created_at');
-       
+       $this->compars = Auth::user()->compars->sortByDesc('created_at'); 
     }
+
     #[On('update-compare')] 
+    // Event listener for updating comparison list
     public function update_compare(){
         $this->compars = Auth::user()->compars->sortByDesc('created_at');
     }
+
+    // Delete a specific comparison by ID
     public function deleteCompare($id){
         Compare::findOrFail($id)->delete();
         $this->update_compare();
     }
+
     #[On('create-compare')] 
-    public function getSuggestions($id,$type)
-    {
-        
+    // Event listener for creating suggestions for comparison
+    public function getSuggestions($id,$type){ 
         $compare = Compare::find($id);
         $this->suggestions = '';
-        // dd($compare);
         if($type == 'show' && $compare->generated >0){
             if($compare){
                 $this->device1 =  $compare->device1;
@@ -58,34 +62,30 @@ class ShowCompare extends Component
                 $compare ->content = $this->suggestions;
                 $compare->generated =  $compare->generated + 1;
                 $compare->save();
-                $this->update_compare();
-                
+                $this->update_compare();  
             }catch(Exception $e){
                 $this->error = 'Request failed, please try again';
             }
-        
-
-        }
-       
-        
-        
-    }       
-    private function createAndRunThread(): ThreadRunResponse
-    {
+        } 
+    } 
+    
+    // Create and run a thread using OpenAI's API
+    private function createAndRunThread(): ThreadRunResponse{
         return OpenAI::threads()->createAndRun([
-            'assistant_id' => 'asst_WasD1pfAQlmy88GZQdvbS0eC',
+            'assistant_id' => 'asst_WasD1pfAQlmy88GZQdvbS0eC', //This line specifies the ID of the assistant used for this thread
             'thread' => [
-                'messages' => [
+                'messages' => [ //Inside the thread, a list of messages that will be part of the thread is defined
                     [
-                        'role' => 'user',
+                        'role' => 'user', // Authentacted
                         'content' => $this->generatePrompt(),
                     ],
                 ],
             ],
         ]);
     }
-    private function loadAnswer(ThreadRunResponse $threadRun )
-    {
+
+    // Load the answer from OpenAI's thread run
+    private function loadAnswer(ThreadRunResponse $threadRun ){
         while(in_array($threadRun->status, ['queued', 'in_progress'])) {
             $threadRun = OpenAI::threads()->runs()->retrieve(
                 threadId: $threadRun->threadId,
@@ -102,19 +102,10 @@ class ShowCompare extends Component
         );
 
         $this->suggestions = $messageList->data[0]->content[0]->text->value;
-        // $room = Room::find($room);
-        // $counter = $room->generated + 1;
-        // $room->update([
-        //     'content' => $this->suggestions,
-        //     'generated' => $counter,
-        // ]);
-        // $room->save();
-
     }
-    private function generatePrompt()
-    {
-        // $deviceNames = array_column($room->devices, 'value');
-        // $deviceList = implode(", ", $deviceNames);
+
+    // Generate a prompt for the thread
+    private function generatePrompt(){
         return "compare between  {$this->device1} and {$this->device2}";
     }
 }

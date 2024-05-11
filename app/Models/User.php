@@ -31,11 +31,6 @@ class User extends Authenticatable{
         'remember_token',
     ];
 
-    // 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
     // This method specifies one-to-many relationship between User and Plan
     // This allows the user to have multiple plans
     public function plans() :HasMany{

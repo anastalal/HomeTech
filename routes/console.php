@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Artisan;
 | This file is where you may define all of your Closure based console
 | commands. Each Closure is bound to a command instance allowing a
 | simple approach to interacting with each command's IO methods.
-|
+| Artisan is the command-line interface included with Laravel, which provides a number of built-in commands 
+| to assist in various tasks like database migrations
 */
 
 Artisan::command('inspire', function () {
